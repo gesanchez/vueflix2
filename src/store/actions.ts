@@ -11,31 +11,20 @@ export default {
    */
   async SEARCH_MOVIES(context: any, q: string): Promise<void> {
     const client = getClient('movies');
-    try {
-      const {
-        hits,
-        nbHits,
-        page,
-        hitsPerPage,
-        query,
-      }: {
-        hits: Array<Movie>;
-        nbHits: number;
-        page: number;
-        hitsPerPage: number;
-        query: string;
-      } = await client.search(q);
-
-      context.commit('SET_MOVIES', {
-        movies: hits,
-        nbHits,
-        page,
-        hitsPerPage,
-        query,
-      });
-    } catch (e) {
-      console.log(e);
-    }
+    return new Promise((resolve, reject) => {
+      client.search(q)
+        .then((result) => {
+          context.commit('SET_MOVIES', {
+            movies: result.hits,
+            nbHits: result.nbHits,
+            page: result.page,
+            hitsPerPage: result.hitsPerPage,
+            query: result.query,
+          });
+          resolve();
+        })
+        .catch((e) => reject(e));
+    });
   },
   /**
    * SEARCH_MORE
@@ -84,7 +73,7 @@ export default {
    * @param context - Contexto de Vue
    * @param id - Id de la pelicula
    */
-  async SELECT_MOVIE(context: unknown, id: string): Promise<void> {
+  async SELECT_MOVIE(context: any, id: string): Promise<void> {
     const client = getClient('movies');
     return new Promise((resolve, reject) => {
       client

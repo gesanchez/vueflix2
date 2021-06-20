@@ -3,7 +3,11 @@
     <div class="mt-4 mb-4">
       <TheSearch v-model="search"></TheSearch>
     </div>
-    <div class="grid grid-cols-4 gap-6">
+    <div v-if="error" class="text-center">
+      <p class="text-center text-xl mt-5">Error de comunicaci&oacute;n</p>
+      <img class="inline-block mt-5 w-96" src="/500.svg" alt="500" />
+    </div>
+    <div v-else class="grid grid-cols-4 gap-6">
       <div class="shadow mb-4" v-for="movie in getMovies" :key="movie.id" @click="viewDetail(movie.id)">
         <TheMovie :title="movie.title" :poster="movie.poster"></TheMovie>
       </div>
@@ -31,14 +35,19 @@ export default Vue.extend({
     return {
       search: '',
       timer: 0,
+      error: null,
     };
   },
   components: {
     TheSearch,
     TheMovie,
   },
-  created() {
-    this.$store.dispatch('SEARCH_MOVIES', '');
+  async created() {
+    try {
+      await this.$store.dispatch('SEARCH_MOVIES', '');
+    } catch (e) {
+      this.error = e;
+    }
   },
   methods: {
     getMore() {
