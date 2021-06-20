@@ -3,7 +3,7 @@
 Aplicacion para buscar peliculas haciendo uso del motor de busquedas de [algolia](https://www.algolia.com/). Demuestra como hacer uso del motor de busquedas de algolia y guardar la informacion con vuex.
 
 Esta aplicacion esta construida con
-* [Vue 3](https://vuejs.org/)
+* [Vue 2](https://vuejs.org/)
 * [Vue Router](https://router.vuejs.org/) 
 * [Vuex](https://vuex.vuejs.org/)
 * [Algolia](https://www.algolia.com/)
