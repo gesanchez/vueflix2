@@ -1,5 +1,7 @@
+import { Movie } from '../interfaces/movie';
+
 export interface AddMovies {
-  hits: Array<Movie>;
+  movies: Array<Movie>;
   nbHits: number;
   page: number;
   hitsPerPage: number;
